@@ -187,7 +187,8 @@ export const staticSiteContent: SiteContent[] = [
         cta_secondary: null,
         meta: {
             whatsapp: 'https://wa.me/201080172165',
-            instagram: 'https://instagram.com',
+            instagram: 'https://www.instagram.com/abdo_mo20022?igsh=MTdnd21kZGw1NDJ0ag%3D%3D',
+            tiktok: 'https://www.tiktok.com/@abdo_nady20?_r=1&_t=ZS-95IDpAU5nR2',
         },
     },
 ];

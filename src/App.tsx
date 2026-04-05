@@ -1,10 +1,12 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import LoadingScreen from './LoadingScreen';
 import {
     ArrowUpRight,
     Instagram,
     Mail,
     Menu,
     MessageCircle,
+    Music2,
     Send,
     Sparkles,
     X,
@@ -307,17 +309,17 @@ function FeatureMarqueeSection({
                         className="gap-4"
                         items={items}
                         renderItem={(item, index) => (
-                            <GlassCard key={`${item.title}-${index}`} className="industry-card min-w-[280px] max-w-[280px] overflow-hidden border-white/8 bg-white/[0.04] p-0 sm:min-w-[340px] sm:max-w-[340px]">
-                                <div className="p-5 sm:p-6">
+                            <GlassCard key={`${item.title}-${index}`} className="industry-card min-w-[230px] max-w-[230px] overflow-hidden border-white/8 bg-white/[0.04] p-0 sm:min-w-[290px] sm:max-w-[290px]">
+                                <div className="p-4 sm:p-5">
                                     <div className="flex items-start justify-between gap-3">
                                         <div className="flex items-center gap-3">
                                             {item.emoji ? (
-                                                <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-xl shadow-[0_0_20px_rgba(0,209,255,0.08)]">
+                                                <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-base shadow-[0_0_20px_rgba(0,209,255,0.08)]">
                                                     {item.emoji}
                                                 </div>
                                             ) : null}
                                             <div>
-                                                <h4 className="text-xl font-semibold text-white">{item.title}</h4>
+                                                <h4 className="text-base font-semibold text-white">{item.title}</h4>
                                                 {item.badge ? <p className="mt-1 text-sm text-cyan-200/85">{item.badge}</p> : null}
                                             </div>
                                         </div>
@@ -345,6 +347,8 @@ function FeatureMarqueeSection({
 }
 
 export default function App() {
+    const [appReady, setAppReady] = useState(false);
+    const handleLoadingDone = useCallback(() => setAppReady(true), []);
     const [menuOpen, setMenuOpen] = useState(false);
     const [content, setContent] = useState<SiteContent[]>(staticSiteContent);
     const [results] = useState<StudentResult[]>(staticStudentResults);
@@ -389,7 +393,9 @@ export default function App() {
     const whatsappNumber = whatsappLink.replace('https://wa.me/', '').replace(/\D/g, '');
 
     return (
-        <div dir="rtl" className="min-h-screen overflow-x-hidden bg-[#05060A] text-white">
+        <>
+        {!appReady && <LoadingScreen onDone={handleLoadingDone} />}
+        <div dir="rtl" className="min-h-screen overflow-x-hidden bg-[#05060A] text-white" style={{ visibility: appReady ? 'visible' : 'hidden' }}>
             <div className="pointer-events-none fixed inset-0 overflow-hidden">
                 <video
                     className="absolute inset-0 h-full w-full object-cover opacity-18"
@@ -532,8 +538,9 @@ export default function App() {
                                     />
                                     <div className="absolute inset-0 rounded-[22px] bg-[linear-gradient(180deg,rgba(11,11,15,0.08)_0%,rgba(11,11,15,0.18)_38%,rgba(11,11,15,0.78)_100%)]" />
                                     <div className="absolute bottom-4 right-4 left-4 rounded-[20px] border border-white/10 bg-[#0B0B0F]/55 p-4 backdrop-blur-xl sm:bottom-6 sm:right-6 sm:left-6">
-                                        <p className="text-sm text-white/60">ميديا باير</p>
-                                        <p className="mt-1 text-xl font-semibold text-white">التسويق الأدائي</p>
+                                        <p className="text-xs tracking-[0.25em] text-cyan-300/80">Media Buyer</p>
+                                        <p className="mt-1 text-xl font-bold text-white">Abdelrahman Mohamed</p>
+                                        <p className="mt-0.5 text-sm text-white/55">التسويق الأدائي — ميتا / تيك توك / سناب</p>
                                     </div>
                                 </GlassCard>
                             </motion.div>
@@ -559,13 +566,12 @@ export default function App() {
                                         variants={fadeUp}
                                         transition={{ duration: 0.5, delay: index * 0.08 }}
                                     >
-                                        <GlassCard className="p-4 sm:p-5">
-                                            <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#7B3FE4]/30 to-[#00D1FF]/20 text-cyan-200 shadow-[0_0_25px_rgba(0,209,255,0.15)]">
-                                                <Icon size={20} />
+                                        <GlassCard className="p-3 sm:p-4">
+                                            <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-[#7B3FE4]/30 to-[#00D1FF]/20 text-cyan-200 shadow-[0_0_20px_rgba(0,209,255,0.12)]">
+                                                <Icon size={16} />
                                             </div>
-                                            <p className="text-xs tracking-[0.25em] text-white/40">01</p>
-                                            <p className="mt-3 text-2xl font-bold text-white sm:text-3xl">{item.number}</p>
-                                            <p className="mt-2 text-xs leading-6 text-white/60 sm:text-sm">{item.label}</p>
+                                            <p className="mt-2 text-xl font-bold text-white sm:text-2xl">{item.number}</p>
+                                            <p className="mt-1 text-[11px] leading-5 text-white/55 sm:text-xs">{item.label}</p>
                                         </GlassCard>
                                     </motion.div>
                                 );
@@ -748,19 +754,19 @@ export default function App() {
                                     className="gap-3 px-1"
                                     items={industries}
                                     renderItem={(industry, index) => (
-                                        <GlassCard key={`${industry.title}-${index}`} className="industry-card min-w-[228px] max-w-[228px] overflow-hidden p-0 sm:min-w-[280px] sm:max-w-[280px]">
-                                            <div className="relative h-48 overflow-hidden sm:h-56">
+                                        <GlassCard key={`${industry.title}-${index}`} className="industry-card min-w-[200px] max-w-[200px] overflow-hidden p-0 sm:min-w-[246px] sm:max-w-[246px]">
+                                            <div className="relative h-36 overflow-hidden sm:h-44">
                                                 <img src={industry.image} alt={industry.title} className="h-full w-full object-cover" />
                                                 <div className="absolute inset-0 bg-gradient-to-t from-[#0B0B0F] via-[#0B0B0F]/35 to-transparent" />
                                                 <div className="absolute right-4 top-4 rounded-full border border-white/10 bg-black/30 px-3 py-1 text-lg backdrop-blur-md">
                                                     {industry.emoji}
                                                 </div>
                                                 <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
-                                                    <h3 className="text-xl font-semibold text-white sm:text-2xl">{industry.title}</h3>
+                                                    <h3 className="text-base font-semibold text-white sm:text-lg">{industry.title}</h3>
                                                 </div>
                                             </div>
-                                            <div className="p-4 sm:p-5">
-                                                <p className="text-sm leading-7 text-white/68">{industry.text}</p>
+                                            <div className="p-3 sm:p-4">
+                                                <p className="text-xs leading-6 text-white/65 line-clamp-3">{industry.text}</p>
                                             </div>
                                         </GlassCard>
                                     )}
@@ -777,8 +783,8 @@ export default function App() {
                                     className="gap-3 px-1"
                                     items={courses}
                                     renderItem={(course, index) => (
-                                        <GlassCard key={`${course.title}-${index}`} className="industry-card min-w-[228px] max-w-[228px] overflow-hidden p-0 sm:min-w-[280px] sm:max-w-[280px]">
-                                            <div className="relative h-48 overflow-hidden sm:h-56">
+                                        <GlassCard key={`${course.title}-${index}`} className="industry-card min-w-[200px] max-w-[200px] overflow-hidden p-0 sm:min-w-[246px] sm:max-w-[246px]">
+                                            <div className="relative h-36 overflow-hidden sm:h-44">
                                                 <img src={course.image} alt={course.title} className="h-full w-full object-cover" />
                                                 <div className="absolute inset-0 bg-gradient-to-t from-[#0B0B0F] via-[#0B0B0F]/35 to-transparent" />
                                                 <div className="absolute right-4 top-4 rounded-full border border-white/10 bg-black/30 px-3 py-1 text-lg backdrop-blur-md">
@@ -788,13 +794,13 @@ export default function App() {
                                                     {course.badge}
                                                 </div>
                                                 <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
-                                                    <h3 className="text-xl font-semibold text-white sm:text-2xl">{course.title}</h3>
-                                                    <p className="mt-1 text-sm text-white/70">{course.subtitle}</p>
+                                                    <h3 className="text-base font-semibold text-white">{course.title}</h3>
+                                                    <p className="mt-0.5 text-xs text-white/65">{course.subtitle}</p>
                                                 </div>
                                             </div>
-                                            <div className="p-4 sm:p-5">
-                                                <p className="text-sm text-cyan-200/90">{course.mentor}</p>
-                                                <p className="mt-3 text-sm leading-7 text-white/68">{course.text}</p>
+                                            <div className="p-3 sm:p-4">
+                                                <p className="text-xs text-cyan-200/90 truncate">{course.mentor}</p>
+                                                <p className="mt-2 text-xs leading-5 text-white/65 line-clamp-3">{course.text}</p>
                                             </div>
                                         </GlassCard>
                                     )}
@@ -934,10 +940,11 @@ export default function App() {
                                             <MessageCircle className="text-emerald-300" size={18} />
                                         </a>
                                         <a
-                                            href={contactSection?.meta?.instagram || 'https://instagram.com'}
+                                            href={contactSection?.meta?.instagram || 'https://www.instagram.com/abdo_mo20022'}
+                                            target="_blank" rel="noopener noreferrer"
                                             className="flex items-center justify-between rounded-[20px] border border-white/10 bg-white/5 px-4 py-4 text-sm text-white/85 transition hover:border-fuchsia-400/40 hover:shadow-[0_0_25px_rgba(217,70,239,0.18)]"
                                         >
-                                            <span>إنستجرام</span>
+                                            <span>إنستجرام — @abdo_mo20022</span>
                                             <Instagram className="text-fuchsia-300" size={18} />
                                         </a>
                                         <a
@@ -948,11 +955,12 @@ export default function App() {
                                             <Mail className="text-cyan-300" size={18} />
                                         </a>
                                         <a
-                                            href="https://t.me/mediabuyerpro"
-                                            className="flex items-center justify-between rounded-[20px] border border-white/10 bg-white/5 px-4 py-4 text-sm text-white/85 transition hover:border-sky-400/40 hover:shadow-[0_0_25px_rgba(56,189,248,0.18)]"
+                                            href={contactSection?.meta?.tiktok || 'https://www.tiktok.com/@abdo_nady20'}
+                                            target="_blank" rel="noopener noreferrer"
+                                            className="flex items-center justify-between rounded-[20px] border border-white/10 bg-white/5 px-4 py-4 text-sm text-white/85 transition hover:border-pink-400/40 hover:shadow-[0_0_25px_rgba(244,114,182,0.18)]"
                                         >
-                                            <span>تيليجرام — @mediabuyerpro</span>
-                                            <Send className="text-sky-300" size={18} />
+                                            <span>تيك توك — @abdo_nady20</span>
+                                            <Music2 className="text-pink-300" size={18} />
                                         </a>
                                     </div>
                                     <div className="mt-6 rounded-[20px] border border-white/10 bg-white/5 p-4">
@@ -1021,5 +1029,6 @@ export default function App() {
                 </div>
             </div>
         </div>
+        </>
     );
 }
