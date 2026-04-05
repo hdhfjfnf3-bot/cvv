@@ -540,7 +540,6 @@ export default function App() {
                                         <div className="absolute bottom-4 right-4 left-4 rounded-[20px] border border-white/10 bg-[#0B0B0F]/55 p-4 backdrop-blur-xl sm:bottom-6 sm:right-6 sm:left-6">
                                             <p className="text-xs tracking-[0.25em] text-cyan-300/80">Media Buyer</p>
                                             <p className="mt-1 text-xl font-bold text-white">Abdelrahman Mohamed</p>
-                                            <p className="mt-0.5 text-sm text-white/55">التسويق الأدائي — ميتا / تيك توك / سناب</p>
                                         </div>
                                     </GlassCard>
                                 </motion.div>
