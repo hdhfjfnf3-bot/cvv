@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+.draggable-rail {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  user-select: none;
+  cursor: grab;
+  touch-action: pan-y;
+}
+
+.draggable-rail::-webkit-scrollbar {
+  display: none;
+}
+
+.draggable-rail.dragging-rail {
+  cursor: grabbing;
+}
+
+.industry-card {
+  flex-shrink: 0;
+}
