@@ -446,7 +446,7 @@ export default function App() {
                             </div>
 
                             <div className="hidden items-center gap-8 md:flex">
-                                <a href="#courses" className="text-sm text-white/70 transition hover:text-cyan-300">الكورسات</a>
+                                <a href="#courses" className="text-sm text-white/70 transition hover:text-cyan-300">Courses</a>
                                 <a href="#about" className="text-sm text-white/70 transition hover:text-cyan-300">عني</a>
                                 <a
                                     href="#contact"
@@ -459,7 +459,7 @@ export default function App() {
                         {menuOpen ? (
                             <div className="border-t border-white/10 px-4 py-4 md:hidden">
                                 <div className="flex flex-col gap-3">
-                                    <a href="#courses" className="rounded-2xl bg-white/5 px-4 py-3 text-sm text-white/80">الكورسات</a>
+                                    <a href="#courses" className="rounded-2xl bg-white/5 px-4 py-3 text-sm text-white/80">Courses</a>
                                     <a href="#about" className="rounded-2xl bg-white/5 px-4 py-3 text-sm text-white/80">عني</a>
                                     <a href="#contact" className="rounded-2xl bg-gradient-to-r from-[#7B3FE4] to-[#00D1FF] px-4 py-3 text-center text-sm font-semibold text-white">ابدأ الآن</a>
                                 </div>
@@ -775,7 +775,7 @@ export default function App() {
                         </section>
 
                         <section id="courses">
-                            <SectionTitle eyebrow="07" title="الكورسات والتدريب" subtitle="رحلتي التعليمية الكاملة في التسويق الرقمي والميديا باينج" />
+                            <SectionTitle eyebrow="07" title="Courses & Training" subtitle="رحلتي التعليمية الكاملة في التسويق الرقمي والميديا باينج" />
                             <div className="relative overflow-hidden rounded-[30px] border border-white/10 bg-white/[0.03] p-3 sm:p-5">
                                 <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-[#0B0B0F] to-transparent" />
                                 <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-[#0B0B0F] to-transparent" />
@@ -857,43 +857,6 @@ export default function App() {
                                                 </div>
                                                 <LineChart points={result.chart_points} />
                                                 <p className="mt-4 text-sm leading-7 text-white/65">{result.note}</p>
-                                            </GlassCard>
-                                        </motion.div>
-                                    ))}
-                                </div>
-                            )}
-                        </section>
-
-                        <section>
-                            <SectionTitle title="آراء نجحوا معايا" subtitle="تجارب حقيقية من أشخاص وثقوا في الشغل وحققوا نتائج." />
-                            {loading ? (
-                                <div className="grid gap-4 md:grid-cols-3">
-                                    {Array.from({ length: 3 }).map((_, index) => (
-                                        <div key={index} className="h-56 animate-pulse rounded-[24px] border border-white/10 bg-white/5" />
-                                    ))}
-                                </div>
-                            ) : (
-                                <div className="grid gap-4 md:grid-cols-3">
-                                    {testimonials.map((item, index) => (
-                                        <motion.div
-                                            key={item.id}
-                                            initial="hidden"
-                                            whileInView="visible"
-                                            viewport={{ once: true, amount: 0.25 }}
-                                            variants={fadeUp}
-                                            transition={{ duration: 0.5, delay: index * 0.1 }}
-                                        >
-                                            <GlassCard className="relative h-full p-4 before:absolute before:inset-0 before:rounded-[24px] before:p-px before:[background:linear-gradient(135deg,rgba(123,63,228,0.55),rgba(0,209,255,0.35))] before:[mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:[mask-composite:xor] before:[-webkit-mask-composite:xor] sm:p-5">
-                                                <div className="relative flex h-full flex-col">
-                                                    <div className="mb-4 flex items-center gap-3">
-                                                        <img src={item.avatar_url} alt={item.name} className="h-14 w-14 rounded-full object-cover ring-2 ring-cyan-300/30" />
-                                                        <div>
-                                                            <p className="font-semibold text-white">{item.name}</p>
-                                                            <p className="text-sm text-white/50">{item.role}</p>
-                                                        </div>
-                                                    </div>
-                                                    <p className="text-sm leading-7 text-white/72">“{item.review}”</p>
-                                                </div>
                                             </GlassCard>
                                         </motion.div>
                                     ))}
