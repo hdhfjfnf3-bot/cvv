@@ -99,13 +99,13 @@ export const skillTags = [
 ];
 
 export const experiencePoints = [
-    'إدارة الحملات الإعلانية على Meta (Facebook وInstagram) وTikTok وSnapchat',
-    'اختبار عدة Creatives وجماهير وعروض للوصول إلى أفضل تركيبة رابحة',
-    'متابعة يومية للحملات واتخاذ القرارات بناءً على البيانات',
-    'تحسين معدل التحويل وتقليل تكلفة النتيجة',
-    'توسيع الحملات الناجحة مع الحفاظ على عائد قوي على الإنفاق الإعلاني',
-    'إعداد وإدارة أدوات التتبع لضمان جمع بيانات دقيقة',
-    'تقديم تقارير أداء واضحة مع توصيات عملية قابلة للتنفيذ',
+    { text: 'إدارة الحملات الإعلانية على Meta (Facebook وInstagram) وTikTok وSnapchat', image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80' },
+    { text: 'اختبار عدة Creatives وجماهير وعروض للوصول إلى أفضل تركيبة رابحة', image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80' },
+    { text: 'متابعة يومية للحملات واتخاذ القرارات بناءً على البيانات', image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=600&q=80' },
+    { text: 'تحسين معدل التحويل وتقليل تكلفة النتيجة', image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80' },
+    { text: 'توسيع الحملات الناجحة مع الحفاظ على عائد قوي على الإنفاق الإعلاني', image: 'https://images.unsplash.com/photo-1573804633927-bfcbcd909acd?auto=format&fit=crop&w=600&q=80' },
+    { text: 'إعداد وإدارة أدوات التتبع لضمان جمع بيانات دقيقة', image: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=600&q=80' },
+    { text: 'تقديم تقارير أداء واضحة مع توصيات عملية قابلة للتنفيذ', image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80' },
 ];
 
 export const platformCards = [
@@ -113,34 +113,37 @@ export const platformCards = [
         title: 'إعلانات Meta',
         subtitle: 'إعلانات Facebook وInstagram',
         bullets: ['جماهير مخصصة', 'جماهير مشابهة', 'حملات إعادة الاستهداف', 'إعداد الـ Pixel والتتبع', 'توسيع الحملات'],
+        image: 'https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?auto=format&fit=crop&w=600&q=80',
     },
     {
         title: 'إعلانات TikTok',
         subtitle: 'أداء قوي في الفيديوهات القصيرة',
         bullets: ['إعلانات داخل الخلاصة', 'إعلانات Spark', 'حملات TopView', 'اختبار الـ Creative', 'إعداد TikTok Pixel', 'استهداف الجيل الجديد'],
+        image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80',
     },
     {
         title: 'إعلانات Snapchat',
         subtitle: 'منصة مثالية للوصول للشباب',
         bullets: ['إعلانات القصص', 'إعلانات المجموعات', 'الإعلانات الديناميكية', 'حملات عدسات الواقع المعزز', 'إعداد Snapchat Pixel', 'استهداف الفئة الشابة'],
+        image: 'https://images.unsplash.com/photo-1557672172-298e090bd0f1?auto=format&fit=crop&w=600&q=80',
     },
 ];
 
 export const services = [
-    { emoji: '🎯', title: 'Campaign Management', text: 'إدارة كاملة لحملاتك الإعلانية على Meta وTikTok وSnapchat بأعلى كفاءة ممكنة.' },
-    { emoji: '📊', title: 'Data Analysis & Reporting', text: 'تقارير يومية وأسبوعية وشهرية برؤية واضحة وتوصيات قابلة للتنفيذ.' },
-    { emoji: '📈', title: 'Campaign Scaling', text: 'تنمية الحملات الرابحة تدريجيًا مع الحفاظ على العائد على الإنفاق الإعلاني والأداء المستهدف.' },
-    { emoji: '🧪', title: 'A/B Testing', text: 'اختبار منظم لللـ Creatives والجماهير والعروض للوصول لأفضل تركيبة تحقق النتائج.' },
-    { emoji: '⚙️', title: 'Tracking Setup', text: 'ضبط الـ Pixel وأدوات التتبع بدقة لضمان بيانات نظيفة وقرارات واثقة.' },
-    { emoji: '💡', title: 'Marketing Consulting', text: 'استراتيجية إعلانية كاملة مناسبة لنوع منتجك وجمهورك المستهدف.' },
+    { emoji: '🎯', title: 'Campaign Management', text: 'إدارة كاملة لحملاتك الإعلانية على Meta وTikTok وSnapchat بأعلى كفاءة ممكنة.', image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80' },
+    { emoji: '📊', title: 'Data Analysis & Reporting', text: 'تقارير يومية وأسبوعية وشهرية برؤية واضحة وتوصيات قابلة للتنفيذ.', image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80' },
+    { emoji: '📈', title: 'Campaign Scaling', text: 'تنمية الحملات الرابحة تدريجيًا مع الحفاظ على العائد على الإنفاق الإعلاني والأداء المستهدف.', image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80' },
+    { emoji: '🧪', title: 'A/B Testing', text: 'اختبار منظم لللـ Creatives والجماهير والعروض للوصول لأفضل تركيبة تحقق النتائج.', image: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=600&q=80' },
+    { emoji: '⚙️', title: 'Tracking Setup', text: 'ضبط الـ Pixel وأدوات التتبع بدقة لضمان بيانات نظيفة وقرارات واثقة.', image: 'https://images.unsplash.com/photo-1573804633927-bfcbcd909acd?auto=format&fit=crop&w=600&q=80' },
+    { emoji: '💡', title: 'Marketing Consulting', text: 'استراتيجية إعلانية كاملة مناسبة لنوع منتجك وجمهورك المستهدف.', image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=600&q=80' },
 ];
 
 export const systems = [
-    'بناء وتوسيع أنظمة تسويق كاملة عبر مراحل الـ Funnel لمجالات متعددة',
-    'تطبيق التتبع من جهة الخادم للوصول لأعلى دقة ممكنة في البيانات',
-    'إنشاء أنظمة إعادة استهداف تربط بين الإعلانات والمحتوى والعروض',
-    'تطوير أطر قوية لاختبار الـ Creative واكتشاف الحملات الرابحة بشكل مستمر',
-    'إدارة حملات ضخمة متعددة المنصات في نفس الوقت (Meta + Google + TikTok)',
+    { text: 'بناء وتوسيع أنظمة تسويق كاملة عبر مراحل الـ Funnel لمجالات متعددة', image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=600&q=80' },
+    { text: 'تطبيق التتبع من جهة الخادم للوصول لأعلى دقة ممكنة في البيانات', image: 'https://images.unsplash.com/photo-1573804633927-bfcbcd909acd?auto=format&fit=crop&w=600&q=80' },
+    { text: 'إنشاء أنظمة إعادة استهداف تربط بين الإعلانات والمحتوى والعروض', image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80' },
+    { text: 'تطوير أطر قوية لاختبار الـ Creative واكتشاف الحملات الرابحة بشكل مستمر', image: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=600&q=80' },
+    { text: 'إدارة حملات ضخمة متعددة المنصات في نفس الوقت (Meta + Google + TikTok)', image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80' },
 ];
 
 export const industries = [

@@ -11,9 +11,15 @@ export default function LoadingScreen({ onDone }: { onDone: () => void }) {
     const [progress, setProgress] = useState(0);
     const [lineIdx, setLineIdx] = useState(0);
     const [phase, setPhase] = useState<'in' | 'loaded' | 'out'>('in');
+    const [showStart, setShowStart] = useState(false);
     const rafRef = useRef<number>(0);
     const startRef = useRef<number | null>(null);
     const DURATION = 2600; // ms total
+
+    const handleStart = useCallback(() => {
+        setPhase('out');
+        setTimeout(() => onDone(), 600);
+    }, [onDone]);
 
     const tick = useCallback((ts: number) => {
         if (!startRef.current) startRef.current = ts;
@@ -28,10 +34,9 @@ export default function LoadingScreen({ onDone }: { onDone: () => void }) {
             rafRef.current = requestAnimationFrame(tick);
         } else {
             setPhase('loaded');
-            setTimeout(() => setPhase('out'), 400);
-            setTimeout(() => onDone(), 1100);
+            setTimeout(() => setShowStart(true), 300);
         }
-    }, [onDone]);
+    }, []);
 
     useEffect(() => {
         // Small delay so component mounts first
@@ -169,6 +174,42 @@ export default function LoadingScreen({ onDone }: { onDone: () => void }) {
                     {['Meta', 'TikTok', 'Snapchat'].map((p) => (
                         <span key={p} className="ls-pill">{p}</span>
                     ))}
+                </div>
+
+                {/* Start button — appears at 100% */}
+                <div style={{
+                    marginTop: 32,
+                    opacity: showStart ? 1 : 0,
+                    transform: showStart ? 'translateY(0) scale(1)' : 'translateY(16px) scale(0.95)',
+                    transition: 'opacity 0.5s ease, transform 0.5s ease',
+                    pointerEvents: showStart ? 'auto' : 'none',
+                }}>
+                    <button
+                        onClick={handleStart}
+                        style={{
+                            position: 'relative',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: 10,
+                            padding: '14px 44px',
+                            borderRadius: 100,
+                            border: 'none',
+                            background: 'linear-gradient(135deg, #7B3FE4, #00D1FF)',
+                            color: '#fff',
+                            fontSize: 17,
+                            fontWeight: 800,
+                            fontFamily: 'inherit',
+                            cursor: 'pointer',
+                            letterSpacing: '0.06em',
+                            boxShadow: '0 0 40px rgba(0,209,255,0.55), 0 0 80px rgba(123,63,228,0.35)',
+                            animation: 'ls-pulse-btn 2s ease-in-out infinite',
+                        }}
+                    >
+                        اضغط للبدء
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <polygon points="6 3 20 12 6 21 6 3" />
+                        </svg>
+                    </button>
                 </div>
             </div>
 

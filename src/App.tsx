@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import LoadingScreen from './LoadingScreen';
+import VideoSplashScreen from './VideoSplashScreen';
 import {
     ArrowUpRight,
     Instagram,
@@ -38,6 +39,28 @@ import {
 const fadeUp = {
     hidden: { opacity: 0, y: 24 },
     visible: { opacity: 1, y: 0 },
+};
+
+// Stagger container — children animate one by one
+const staggerContainer = {
+    hidden: {},
+    visible: {
+        transition: {
+            staggerChildren: 0.25, // كان 0.1، زودته لـ 0.25 ثانية بين كل كارت والتاني
+            delayChildren: 0.1,
+        },
+    },
+};
+
+// Each item: slides up + scales in from 92%
+const buildItem = {
+    hidden: { opacity: 0, y: 32, scale: 0.92 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] }, // البطء في الأنيميشن نفسه خليته 0.8 بدل 0.5
+    },
 };
 
 function SectionTitle({ eyebrow, title, subtitle }: { eyebrow?: string; title: string; subtitle?: string }) {
@@ -283,7 +306,7 @@ function FeatureMarqueeSection({
     subtitle: string;
     image: string;
     imageAlt: string;
-    items: Array<{ title: string; text?: string; badge?: string; emoji?: string; bullets?: string[] }>;
+    items: Array<{ title: string; text?: string; badge?: string; emoji?: string; image?: string; bullets?: string[] }>;
 }) {
     return (
         <section>
@@ -310,11 +333,17 @@ function FeatureMarqueeSection({
                         items={items}
                         renderItem={(item, index) => (
                             <GlassCard key={`${item.title}-${index}`} className="industry-card min-w-[230px] max-w-[230px] overflow-hidden border-white/8 bg-white/[0.04] p-0 sm:min-w-[290px] sm:max-w-[290px]">
+                                {item.image ? (
+                                    <div className="relative h-32 overflow-hidden sm:h-36">
+                                        <img src={item.image} alt={item.title} className="h-full w-full object-cover transition-transform duration-500 hover:scale-[1.03]" />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-[#0B0B0F]/90 via-[#0B0B0F]/10 to-transparent" />
+                                    </div>
+                                ) : null}
                                 <div className="p-4 sm:p-5">
                                     <div className="flex items-start justify-between gap-3">
                                         <div className="flex items-center gap-3">
                                             {item.emoji ? (
-                                                <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-base shadow-[0_0_20px_rgba(0,209,255,0.08)]">
+                                                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-base shadow-[0_0_20px_rgba(0,209,255,0.08)]">
                                                     {item.emoji}
                                                 </div>
                                             ) : null}
@@ -478,8 +507,10 @@ function LiveNotifications() {
 }
 
 export default function App() {
+    const [loadingDone, setLoadingDone] = useState(false);
     const [appReady, setAppReady] = useState(false);
-    const handleLoadingDone = useCallback(() => setAppReady(true), []);
+    const handleLoadingDone = useCallback(() => setLoadingDone(true), []);
+    const handleVideoDone = useCallback(() => setAppReady(true), []);
     const [menuOpen, setMenuOpen] = useState(false);
     const [content, setContent] = useState<SiteContent[]>(staticSiteContent);
     const [results] = useState<StudentResult[]>(staticStudentResults);
@@ -526,8 +557,9 @@ export default function App() {
 
     return (
         <>
-            {!appReady && <LoadingScreen onDone={handleLoadingDone} />}
-            <div dir="rtl" className="min-h-screen overflow-x-hidden bg-[#05060A] text-white" style={{ visibility: appReady ? 'visible' : 'hidden' }}>
+            {!loadingDone && <LoadingScreen onDone={handleLoadingDone} />}
+            {loadingDone && !appReady && <VideoSplashScreen onDone={handleVideoDone} />}
+            {appReady && <div dir="rtl" className="min-h-screen overflow-x-hidden bg-[#05060A] text-white">
                 <div className="pointer-events-none fixed inset-0 overflow-hidden">
                     <video
                         className="absolute inset-0 h-full w-full object-cover opacity-18"
@@ -685,18 +717,17 @@ export default function App() {
                                 />
                             </section>
 
-                            <section className="grid grid-cols-2 gap-3 md:grid-cols-4 sm:gap-4">
-                                {statsCards.map((item, index) => {
+                            <motion.section
+                                className="grid grid-cols-2 gap-3 md:grid-cols-4 sm:gap-4"
+                                initial="hidden"
+                                whileInView="visible"
+                                viewport={{ once: true, amount: 0.2 }}
+                                variants={staggerContainer}
+                            >
+                                {statsCards.map((item) => {
                                     const Icon = item.icon;
                                     return (
-                                        <motion.div
-                                            key={item.label}
-                                            initial="hidden"
-                                            whileInView="visible"
-                                            viewport={{ once: true, amount: 0.25 }}
-                                            variants={fadeUp}
-                                            transition={{ duration: 0.5, delay: index * 0.08 }}
-                                        >
+                                        <motion.div key={item.label} variants={buildItem}>
                                             <GlassCard className="p-3 sm:p-4">
                                                 <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-[#7B3FE4]/30 to-[#00D1FF]/20 text-cyan-200 shadow-[0_0_20px_rgba(0,209,255,0.12)]">
                                                     <Icon size={16} />
@@ -707,18 +738,24 @@ export default function App() {
                                         </motion.div>
                                     );
                                 })}
-                            </section>
+                            </motion.section>
 
                             <section className="grid gap-4 lg:grid-cols-[0.9fr_1.1fr]">
                                 <GlassCard className="p-5 sm:p-6">
                                     <p className="text-xs tracking-[0.3em] text-white/40">الملف الشخصي</p>
                                     <h2 className="mt-3 text-3xl font-bold text-white">ميديا باير</h2>
                                     <p className="mt-2 text-white/60">التسويق الأدائي</p>
-                                    <div className="mt-6 space-y-4">
+                                    <motion.div
+                                        className="mt-6 space-y-4"
+                                        initial="hidden"
+                                        whileInView="visible"
+                                        viewport={{ once: true, amount: 0.2 }}
+                                        variants={staggerContainer}
+                                    >
                                         {profileFacts.map((fact) => {
                                             const Icon = fact.icon;
                                             return (
-                                                <div key={fact.label} className="flex items-center gap-3 rounded-[20px] border border-white/10 bg-black/20 p-4">
+                                                <motion.div key={fact.label} variants={buildItem} className="flex items-center gap-3 rounded-[20px] border border-white/10 bg-black/20 p-4">
                                                     <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/5 text-cyan-300">
                                                         <Icon size={18} />
                                                     </div>
@@ -726,10 +763,10 @@ export default function App() {
                                                         <p className="text-xs tracking-[0.2em] text-white/40">{fact.label}</p>
                                                         <p className="mt-1 text-sm text-white/85">{fact.value}</p>
                                                     </div>
-                                                </div>
+                                                </motion.div>
                                             );
                                         })}
-                                    </div>
+                                    </motion.div>
                                     <div className="mt-6 flex flex-wrap gap-2">
                                         {['ميتا', 'تيك توك', 'سناب'].map((tag) => (
                                             <span key={tag} className="rounded-full border border-cyan-400/20 bg-cyan-400/10 px-4 py-2 text-xs text-cyan-200">
@@ -795,34 +832,50 @@ export default function App() {
 
                             <section id="skills">
                                 <SectionTitle eyebrow="01" title="المهارات" subtitle="كل ما أتقنه في عالم الإعلانات الرقمية" />
-                                <div className="grid gap-4 lg:grid-cols-2">
+                                <motion.div
+                                    className="grid gap-4 lg:grid-cols-2"
+                                    initial="hidden"
+                                    whileInView="visible"
+                                    viewport={{ once: true, amount: 0.15 }}
+                                    variants={staggerContainer}
+                                >
                                     {skillGroups.map((group) => (
-                                        <GlassCard key={group.title} className="p-5 sm:p-6">
-                                            <h3 className="text-xl font-semibold text-white">{group.title}</h3>
-                                            <div className="mt-5 space-y-4">
-                                                {group.items.map((item) => (
-                                                    <div key={item.label}>
-                                                        <div className="mb-2 flex items-center justify-between text-sm text-white/75">
-                                                            <span>{item.label}</span>
-                                                            <span>{item.value}%</span>
+                                        <motion.div key={group.title} variants={buildItem}>
+                                            <GlassCard className="p-5 sm:p-6">
+                                                <h3 className="text-xl font-semibold text-white">{group.title}</h3>
+                                                <div className="mt-5 space-y-4">
+                                                    {group.items.map((item) => (
+                                                        <div key={item.label}>
+                                                            <div className="mb-2 flex items-center justify-between text-sm text-white/75">
+                                                                <span>{item.label}</span>
+                                                                <span>{item.value}%</span>
+                                                            </div>
+                                                            <div className="h-2 rounded-full bg-white/8">
+                                                                <div
+                                                                    className="h-2 rounded-full bg-gradient-to-r from-[#7B3FE4] to-[#00D1FF] shadow-[0_0_20px_rgba(0,209,255,0.35)]"
+                                                                    style={{ width: `${item.value}%` }}
+                                                                />
+                                                            </div>
                                                         </div>
-                                                        <div className="h-2 rounded-full bg-white/8">
-                                                            <div
-                                                                className="h-2 rounded-full bg-gradient-to-r from-[#7B3FE4] to-[#00D1FF] shadow-[0_0_20px_rgba(0,209,255,0.35)]"
-                                                                style={{ width: `${item.value}%` }}
-                                                            />
-                                                        </div>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </GlassCard>
+                                                    ))}
+                                                </div>
+                                            </GlassCard>
+                                        </motion.div>
                                     ))}
-                                </div>
-                                <div className="mt-4 flex flex-wrap gap-2">
+                                </motion.div>
+                                <motion.div
+                                    className="mt-4 flex flex-wrap gap-2"
+                                    initial="hidden"
+                                    whileInView="visible"
+                                    viewport={{ once: true, amount: 0.15 }}
+                                    variants={staggerContainer}
+                                >
                                     {skillTags.map((tag) => (
-                                        <SkillPill key={tag} label={tag} />
+                                        <motion.div key={tag} variants={buildItem}>
+                                            <SkillPill label={tag} />
+                                        </motion.div>
                                     ))}
-                                </div>
+                                </motion.div>
                             </section>
 
                             <FeatureMarqueeSection
@@ -833,7 +886,8 @@ export default function App() {
                                 imageAlt="الخبرة العملية"
                                 items={experiencePoints.map((point, index) => ({
                                     title: `محطة خبرة ${index + 1}`,
-                                    text: point,
+                                    text: point.text,
+                                    image: point.image,
                                     badge: index === 0 ? 'منهج عملي' : index === 1 ? 'تحسين مستمر' : 'نتائج قابلة للقياس',
                                     emoji: '✦',
                                 }))}
@@ -849,6 +903,7 @@ export default function App() {
                                     title: platform.title,
                                     text: platform.subtitle,
                                     bullets: platform.bullets,
+                                    image: platform.image,
                                     emoji: index === 0 ? '🔵' : index === 1 ? '🎵' : '👻',
                                 }))}
                             />
@@ -862,6 +917,7 @@ export default function App() {
                                 items={services.map((service) => ({
                                     title: service.title,
                                     text: service.text,
+                                    image: service.image,
                                     emoji: service.emoji,
                                 }))}
                             />
@@ -874,7 +930,8 @@ export default function App() {
                                 imageAlt="أنظمة متقدمة"
                                 items={systems.map((item) => ({
                                     title: 'نظام متقدم',
-                                    text: item,
+                                    text: item.text,
+                                    image: item.image,
                                     emoji: '⚡',
                                 }))}
                             />
@@ -948,14 +1005,20 @@ export default function App() {
                                     <p className="max-w-3xl text-sm leading-8 text-white/70">
                                         أنا لا أعمل بالتخمين أو الإحساس، بل أعتمد على البيانات. كل قرار أتخذه مبني على أرقام حقيقية من حملات مباشرة تتم متابعتها يوميًا.
                                     </p>
-                                    <div className="mt-6 grid gap-3 md:grid-cols-2">
+                                    <motion.div
+                                        className="mt-6 grid gap-3 md:grid-cols-2"
+                                        initial="hidden"
+                                        whileInView="visible"
+                                        viewport={{ once: true, amount: 0.2 }}
+                                        variants={staggerContainer}
+                                    >
                                         {whyMe.map((item) => (
-                                            <div key={item} className="rounded-[20px] border border-white/10 bg-white/5 p-4 text-sm text-white/75">
+                                            <motion.div key={item} variants={buildItem} className="rounded-[20px] border border-white/10 bg-white/5 p-4 text-sm text-white/75">
                                                 <span className="mr-2 text-cyan-300">✦</span>
                                                 {item}
-                                            </div>
+                                            </motion.div>
                                         ))}
-                                    </div>
+                                    </motion.div>
                                     <p className="mt-6 text-2xl">✨📱💰🛒🚀</p>
                                 </GlassCard>
                             </section>
@@ -969,16 +1032,15 @@ export default function App() {
                                         ))}
                                     </div>
                                 ) : (
-                                    <div className="grid gap-4 md:grid-cols-3">
-                                        {results.map((result, index) => (
-                                            <motion.div
-                                                key={result.id}
-                                                initial="hidden"
-                                                whileInView="visible"
-                                                viewport={{ once: true, amount: 0.25 }}
-                                                variants={fadeUp}
-                                                transition={{ duration: 0.5, delay: index * 0.1 }}
-                                            >
+                                    <motion.div
+                                        className="grid gap-4 md:grid-cols-3"
+                                        initial="hidden"
+                                        whileInView="visible"
+                                        viewport={{ once: true, amount: 0.15 }}
+                                        variants={staggerContainer}
+                                    >
+                                        {results.map((result) => (
+                                            <motion.div key={result.id} variants={buildItem}>
                                                 <GlassCard className="h-full p-4 sm:p-5">
                                                     <div className="mb-5 flex items-start justify-between">
                                                         <div>
@@ -994,9 +1056,10 @@ export default function App() {
                                                 </GlassCard>
                                             </motion.div>
                                         ))}
-                                    </div>
+                                    </motion.div>
                                 )}
                             </section>
+
 
                             <section>
                                 <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.25 }} variants={fadeUp} transition={{ duration: 0.6 }}>
@@ -1113,7 +1176,7 @@ export default function App() {
                         </main>
                     </div>
                 </div>
-            </div>
+            </div>}
         </>
     );
 }
