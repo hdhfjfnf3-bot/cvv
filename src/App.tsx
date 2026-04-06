@@ -46,7 +46,7 @@ const staggerContainer = {
     hidden: {},
     visible: {
         transition: {
-            staggerChildren: 0.25, // كان 0.1، زودته لـ 0.25 ثانية بين كل كارت والتاني
+            staggerChildren: 0.25, // كان 0.25، زودته لـ 0.5 عشان يبقى أبطأ بضعف الوقت
             delayChildren: 0.1,
         },
     },
@@ -306,7 +306,7 @@ function FeatureMarqueeSection({
     subtitle: string;
     image: string;
     imageAlt: string;
-    items: Array<{ title: string; text?: string; badge?: string; emoji?: string; image?: string; bullets?: string[] }>;
+    items: Array<{ title: string; text?: string; badge?: string; emoji?: string; image?: string; imageClassName?: string; bullets?: string[] }>;
 }) {
     return (
         <section>
@@ -335,8 +335,8 @@ function FeatureMarqueeSection({
                             <GlassCard key={`${item.title}-${index}`} className="industry-card min-w-[230px] max-w-[230px] overflow-hidden border-white/8 bg-white/[0.04] p-0 sm:min-w-[290px] sm:max-w-[290px]">
                                 {item.image ? (
                                     <div className="relative h-32 overflow-hidden sm:h-36">
-                                        <img src={item.image} alt={item.title} className="h-full w-full object-cover transition-transform duration-500 hover:scale-[1.03]" />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-[#0B0B0F]/90 via-[#0B0B0F]/10 to-transparent" />
+                                        <img src={item.image} alt={item.title} className={`h-full w-full transition-transform duration-500 hover:scale-[1.03] ${item.imageClassName || 'object-cover'}`} />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-[#0B0B0F]/90 via-[#0B0B0F]/10 to-transparent pointer-events-none" />
                                     </div>
                                 ) : null}
                                 <div className="p-4 sm:p-5">
@@ -904,6 +904,7 @@ export default function App() {
                                     text: platform.subtitle,
                                     bullets: platform.bullets,
                                     image: platform.image,
+                                    imageClassName: platform.imageClassName,
                                     emoji: index === 0 ? '🔵' : index === 1 ? '🎵' : '👻',
                                 }))}
                             />

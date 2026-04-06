@@ -113,19 +113,22 @@ export const platformCards = [
         title: 'إعلانات Meta',
         subtitle: 'إعلانات Facebook وInstagram',
         bullets: ['جماهير مخصصة', 'جماهير مشابهة', 'حملات إعادة الاستهداف', 'إعداد الـ Pixel والتتبع', 'توسيع الحملات'],
-        image: 'https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?auto=format&fit=crop&w=600&q=80',
+        image: 'https://upload.wikimedia.org/wikipedia/commons/7/7b/Meta_Platforms_Inc._logo.svg',
+        imageClassName: 'object-contain p-6 bg-white',
     },
     {
         title: 'إعلانات TikTok',
         subtitle: 'أداء قوي في الفيديوهات القصيرة',
         bullets: ['إعلانات داخل الخلاصة', 'إعلانات Spark', 'حملات TopView', 'اختبار الـ Creative', 'إعداد TikTok Pixel', 'استهداف الجيل الجديد'],
-        image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80',
+        image: 'https://upload.wikimedia.org/wikipedia/en/a/a9/TikTok_logo.svg',
+        imageClassName: 'object-contain p-8 bg-black',
     },
     {
         title: 'إعلانات Snapchat',
         subtitle: 'منصة مثالية للوصول للشباب',
         bullets: ['إعلانات القصص', 'إعلانات المجموعات', 'الإعلانات الديناميكية', 'حملات عدسات الواقع المعزز', 'إعداد Snapchat Pixel', 'استهداف الفئة الشابة'],
-        image: 'https://images.unsplash.com/photo-1557672172-298e090bd0f1?auto=format&fit=crop&w=600&q=80',
+        image: 'https://upload.wikimedia.org/wikipedia/en/c/c4/Snapchat_logo.svg',
+        imageClassName: 'object-contain p-8 bg-[#FFFC00]',
     },
 ];
 
