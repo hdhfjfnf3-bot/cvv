@@ -1,4 +1,4 @@
-import { BarChart3, Briefcase, Calendar, DollarSign, MapPin, Target, TrendingUp, type LucideIcon } from 'lucide-react';
+import { BarChart3, Briefcase, Calendar, DollarSign, MapPin, Target, TrendingUp, Users, Layers, type LucideIcon } from 'lucide-react';
 
 export type SiteContent = {
     section_key: string;
@@ -272,8 +272,8 @@ export const staticMessages: ContactMessage[] = [
 ];
 
 export const statsCards: { number: string; label: string; icon: LucideIcon }[] = [
-    { number: '2M+', label: 'إيرادات تم تحقيقها ($)', icon: DollarSign },
-    { number: 'ستة أرقام', label: 'ميزانيات إعلانية تمت إدارتها', icon: BarChart3 },
-    { number: '8 أضعاف', label: 'أعلى عائد على الإنفاق الإعلاني', icon: TrendingUp },
-    { number: '60%', label: 'خفض في تكلفة الاكتساب', icon: Target },
+    { number: '+20M$', label: 'ميزانيات إعلانية مدارة', icon: DollarSign },
+    { number: '8x', label: 'العائد على الإنفاق (ROAS)', icon: TrendingUp },
+    { number: '+500', label: 'عملاء شركاء نجاح', icon: Users },
+    { number: '+100', label: 'منصات وحسابات إعلانية', icon: Layers },
 ];

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import LoadingScreen from './LoadingScreen';
 import VideoSplashScreen from './VideoSplashScreen';
+import RoasCalculator from './RoasCalculator';
 import {
     ArrowUpRight,
     Instagram,
@@ -728,12 +729,15 @@ export default function App() {
                                     const Icon = item.icon;
                                     return (
                                         <motion.div key={item.label} variants={buildItem}>
-                                            <GlassCard className="p-3 sm:p-4">
-                                                <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-[#7B3FE4]/30 to-[#00D1FF]/20 text-cyan-200 shadow-[0_0_20px_rgba(0,209,255,0.12)]">
-                                                    <Icon size={16} />
+                                            <GlassCard className="group relative overflow-hidden p-4 sm:p-5 border-cyan-400/20 bg-gradient-to-br from-cyan-900/10 to-transparent shadow-[0_0_20px_rgba(0,209,255,0.08)] transition duration-500 hover:shadow-[0_0_30px_rgba(0,209,255,0.25)] hover:border-cyan-400/50">
+                                                <div className="absolute inset-0 bg-gradient-to-br from-[#7B3FE4]/10 to-[#00D1FF]/10 opacity-0 transition duration-500 group-hover:opacity-100" />
+                                                <div className="relative z-10">
+                                                    <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#7B3FE4]/40 to-[#00D1FF]/30 text-cyan-200 shadow-[0_0_20px_rgba(0,209,255,0.3)]">
+                                                        <Icon size={18} />
+                                                    </div>
+                                                    <p className="mt-3 text-2xl font-black tracking-tight text-white sm:text-3xl drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">{item.number}</p>
+                                                    <p className="mt-1 text-[11px] leading-5 text-cyan-100/70 sm:text-xs font-medium">{item.label}</p>
                                                 </div>
-                                                <p className="mt-2 text-xl font-bold text-white sm:text-2xl">{item.number}</p>
-                                                <p className="mt-1 text-[11px] leading-5 text-white/55 sm:text-xs">{item.label}</p>
                                             </GlassCard>
                                         </motion.div>
                                     );
@@ -1023,6 +1027,10 @@ export default function App() {
                                     <p className="mt-6 text-2xl">✨📱💰🛒🚀</p>
                                 </GlassCard>
                             </section>
+
+                            <motion.div variants={buildItem}>
+                                <RoasCalculator />
+                            </motion.div>
 
                             <section>
                                 <SectionTitle title="نتائج إضافية" subtitle="أمثلة حقيقية على الأداء والنمو من حملات تم تنفيذها بنجاح." />
